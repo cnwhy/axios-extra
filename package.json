@@ -13,7 +13,8 @@
   "keywords": [
     "axios",
     "retry",
-    "concurrent"
+    "concurrent",
+    "queue"
   ],
   "author": "cnwhy",
   "license": "MIT",
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/cnwhy/axios-plus#readme",
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "promise-queue-plus": "^1.1.0"
   }
 }

@@ -1,11 +1,12 @@
-const axios = require('../').create({ maxConcurrent: 1, queueOptions: { retry: 3, retryIsJump:true } });
+const axios = require('../').create({ maxConcurrent: 1, queueOptions: { retry: 3, retryIsJump: true } });
 const max = 5;
+const url = 'https://cnodejs.org/api/v1/topics';
 
 let x = 0;
 //添加一个拦截器,模拟失败
 axios.interceptors.response.use(function(res) {
 	x++;
-	console.log(`${x} % 4 = ${x%4}`, x%4 ? '[retry]': '[ok]');
+	console.log(`${x} % 4 = ${x % 4}`, x % 4 ? '[retry]' : '[ok]');
 	if (x % 4) {
 		throw 'err';
 	}
@@ -14,9 +15,9 @@ axios.interceptors.response.use(function(res) {
 
 for (var i = 0; i < max; i++) {
 	+(function(k) {
-		axios.get('https://www.baidu.com/').then(
+		axios.get(url).then(
 			function() {
-				console.log(max + '-' + ++k,'end');
+				console.log(max + '-' + ++k, 'end');
 			},
 			err => console.log(max + '-' + ++k, err)
 		);

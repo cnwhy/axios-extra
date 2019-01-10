@@ -1,5 +1,5 @@
 {
-  "name": "axios-plus",
+  "name": "axios-extra",
   "version": "0.0.1",
   "description": "Extend \"Axios\"; add concurrency limits, retry, etc.",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cnwhy/axios-plus.git"
+    "url": "git+https://github.com/cnwhy/axios-extra.git"
   },
   "keywords": [
     "axios",
@@ -19,9 +19,9 @@
   "author": "cnwhy",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cnwhy/axios-plus/issues"
+    "url": "https://github.com/cnwhy/axios-extra/issues"
   },
-  "homepage": "https://github.com/cnwhy/axios-plus#readme",
+  "homepage": "https://github.com/cnwhy/axios-extra#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "promise-queue-plus": "^1.1.0"

@@ -1,4 +1,4 @@
-const Queue = require('promise-queue-plus');
+const Queue = require('promise-queue-plus/create')(Promise);
 const apis = new Set(['request', 'get', 'delete', 'head', 'options', 'post', 'put', 'patch']);
 const DEF_MAX_CONCURRENT = 10;
 let debug = false;
@@ -6,8 +6,7 @@ let debug = false;
 function proxyAxios(queue, axios) {
 	function run(fn, ...args) {
 		let axiosConfig = args[args.length - 1];
-		let queueOptions = 
-			typeof axiosConfig == 'object' ? axiosConfig.queueOptions : undefined;
+		let queueOptions = typeof axiosConfig == 'object' ? axiosConfig.queueOptions : undefined;
 		debug && console.log('workQueueOptions:', queueOptions);
 		if (debug) {
 			return queue.go(() => {
@@ -28,6 +27,42 @@ function proxyAxios(queue, axios) {
 			}, queueOptions);
 		}
 	}
+
+	// 为 axios.defaults 添加 maxConcurrent 与 queueOptions 支持
+	axios.defaults.queueOptions = queue._options;
+	Object.defineProperties(axios.defaults, {
+		maxConcurrent: {
+			get() {
+				return queue.getMax();
+			},
+			set(v) {
+				queue.setMax(v);
+			}
+		},
+		queueOptions: {
+			get() {
+				return queue._options;
+			},
+			set(v) {
+				[
+					'queueStart',
+					'queueEnd',
+					'workAdd',
+					'workResolve',
+					'workReject',
+					'workFinally',
+					'retry',
+					'retryIsJump',
+					'timeout',
+					'autoRun'
+				].map(k => {
+					if (k in v) {
+						queue._options[k] = k.v;
+					}
+				});
+			}
+		}
+	});
 
 	return new Proxy(axios, {
 		apply: function(target, thisArg, argumentsList) {
@@ -52,7 +87,7 @@ function proxyAxios(queue, axios) {
 }
 
 function create(axios, maxConcurrent = DEF_MAX_CONCURRENT, queueOptions = {}) {
-	return proxyAxios(new Queue(maxConcurrent, queueOptions), axios);
+	return proxyAxios(Queue(maxConcurrent, queueOptions), axios);
 }
 
 module.exports = create;

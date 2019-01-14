@@ -2,6 +2,8 @@ const axios = require('../').create({ maxConcurrent: 1, queueOptions: { retry: 3
 const max = 5;
 const url = 'https://cnodejs.org/api/v1/topics';
 
+axios.defaults.queueOptions.retry = 0;
+
 let x = 0;
 //添加一个拦截器,模拟失败
 axios.interceptors.response.use(function(res) {

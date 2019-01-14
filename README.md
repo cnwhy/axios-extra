@@ -47,7 +47,3 @@ axios.get('https://www.google.com',{
 const aec = require('axios-extra/create');
 const axios = aec(requeir('axios'), 5, { retry: 5 });
 ```
-
-## 己知问题
-
--   不能通过 `axios.defaults` 更改并发及重试次数.

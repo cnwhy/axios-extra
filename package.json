@@ -1,6 +1,6 @@
 {
   "name": "axios-extra",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Extend \"Axios\"; add concurrency limits, retry, etc.",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,6 @@
   "homepage": "https://github.com/cnwhy/axios-extra#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "promise-queue-plus": "^1.1.0"
+    "promise-queue-plus": "^1.2.1"
   }
 }

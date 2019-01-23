@@ -1,5 +1,6 @@
 const Queue = require('promise-queue-plus/create')(Promise);
-const apis_arg2 = new Set(['request', 'get', 'delete', 'head', 'options']);
+const apis_arg1 = new Set(['request']);
+const apis_arg2 = new Set(['get', 'delete', 'head', 'options']);
 const apis_arg3 = new Set(['post', 'put', 'patch']);
 const DEF_MAX_CONCURRENT = 10;
 let debug = false;
@@ -71,7 +72,13 @@ function proxyAxios(queue, axios) {
 		},
 		get: function(target, property, receiver) {
 			let attr = Reflect.get(target, property, receiver);
-			let i = apis_arg2.has(property) ? 1 : apis_arg3.has(property) ? 2 : null;
+			let i = apis_arg1.has(property)
+				? 0
+				: apis_arg2.has(property)
+				? 1
+				: apis_arg3.has(property)
+				? 2
+				: null;
 			if (i) {
 				return function(...args) {
 					return run.call(this, attr, args[i], ...args);

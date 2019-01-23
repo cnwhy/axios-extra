@@ -41,7 +41,7 @@ axios.get('https://www.google.com',{
 
 ### `create(axios,maxConcurrent,queueOptions)` 扩展现有 `axios`
 
-使用项目中已有 `axios`, 保证用打包工具时不会打包多个版本的 `axios`.
+扩展项目中现有 `axios`,保证 `axios` 版本.
 
 ```js
 const aec = require('axios-extra/create');

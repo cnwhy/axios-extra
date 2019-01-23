@@ -1,12 +1,13 @@
 const Queue = require('promise-queue-plus/create')(Promise);
-const apis = new Set(['request', 'get', 'delete', 'head', 'options', 'post', 'put', 'patch']);
+const apis_arg2 = new Set(['request', 'get', 'delete', 'head', 'options']);
+const apis_arg3 = new Set(['post', 'put', 'patch']);
 const DEF_MAX_CONCURRENT = 10;
 let debug = false;
 
 function proxyAxios(queue, axios) {
-	function run(fn, ...args) {
-		let axiosConfig = args[args.length - 1];
-		let queueOptions = typeof axiosConfig == 'object' ? axiosConfig.queueOptions : undefined;
+	function run(fn, config, ...args) {
+		let axiosConfig = config || {};
+		let queueOptions = axiosConfig.queueOptions || undefined;
 		debug && console.log('workQueueOptions:', queueOptions);
 		if (debug) {
 			return queue.go(() => {
@@ -66,13 +67,14 @@ function proxyAxios(queue, axios) {
 
 	return new Proxy(axios, {
 		apply: function(target, thisArg, argumentsList) {
-			return run.call(thisArg, target, ...argumentsList);
+			return run.call(thisArg, target, argumentsList[0], ...argumentsList);
 		},
 		get: function(target, property, receiver) {
 			let attr = Reflect.get(target, property, receiver);
-			if (apis.has(property)) {
+			let i = apis_arg2.has(property) ? 1 : apis_arg3.has(property) ? 2 : null;
+			if (i) {
 				return function(...args) {
-					return run.call(this, attr, ...args);
+					return run.call(this, attr, args[i], ...args);
 				};
 			}
 			if (property === 'create') {

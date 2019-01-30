@@ -4,7 +4,8 @@
   "description": "Extend \"Axios\"; add concurrency limits, retry, etc.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava --verbose test/axios*.js",
+    "test-cov": "nyc --reporter=lcov npm test"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,10 @@
   "homepage": "https://github.com/cnwhy/axios-extra#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "promise-queue-plus": "^1.2.1"
+    "promise-queue-plus": "^1.2.2"
+  },
+  "devDependencies": {
+    "ava": "^1.2.0",
+    "nyc": "^13.1.0"
   }
 }

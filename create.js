@@ -6,6 +6,7 @@ const DEF_MAX_CONCURRENT = 10;
 let debug = false;
 
 function proxyAxios(queue, axios) {
+
 	function run(fn, config, ...args) {
 		let axiosConfig = config || {};
 		let queueOptions = axiosConfig.queueOptions || undefined;
@@ -59,7 +60,7 @@ function proxyAxios(queue, axios) {
 					'autoRun'
 				].map(k => {
 					if (k in v) {
-						queue._options[k] = k.v;
+						queue._options[k] = v[k];
 					}
 				});
 			}

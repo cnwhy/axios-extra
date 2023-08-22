@@ -3,32 +3,35 @@ const apis_arg1 = new Set(['request']);
 const apis_arg2 = new Set(['get', 'delete', 'head', 'options']);
 const apis_arg3 = new Set(['post', 'put', 'patch']);
 const DEF_MAX_CONCURRENT = 10;
-let debug = false;
+// let debug = false;
 
 function proxyAxios(queue, axios) {
 
 	function run(fn, config, ...args) {
 		let axiosConfig = config || {};
 		let queueOptions = axiosConfig.queueOptions || undefined;
-		debug && console.log('workQueueOptions:', queueOptions);
-		if (debug) {
-			return queue.go(() => {
-				return fn.apply(this, args).then(
-					data => {
-						console.log('_ok_');
-						return data;
-					},
-					err => {
-						console.log('_err_');
-						throw err;
-					}
-				);
-			}, queueOptions);
-		} else {
-			return queue.go(() => {
-				return fn.apply(this, args);
-			}, queueOptions);
-		}
+		// debug && console.log('workQueueOptions:', queueOptions);
+		// if (debug) {
+		// 	return queue.go(() => {
+		// 		return fn.apply(this, args).then(
+		// 			data => {
+		// 				console.log('_ok_');
+		// 				return data;
+		// 			},
+		// 			err => {
+		// 				console.log('_err_');
+		// 				throw err;
+		// 			}
+		// 		);
+		// 	}, queueOptions);
+		// } else {
+		// 	return queue.go(() => {
+		// 		return fn.apply(this, args);
+		// 	}, queueOptions);
+		// }
+		return queue.go(() => {
+			return fn.apply(this, args);
+		}, queueOptions);
 	}
 
 	// 为 axios.defaults 添加 maxConcurrent 与 queueOptions 支持

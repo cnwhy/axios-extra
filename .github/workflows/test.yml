@@ -1,0 +1,62 @@
+name: test
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    # strategy:
+    #   matrix:
+    #     node-version: [16.x, 18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14.x
+        # node-version: ${{ matrix.node-version }}
+
+    - name: npm install
+      run: npm install
+
+    - name: Test
+      run: |
+        npm run test-cov
+
+    # # 手动调 coveralls
+    # - name: Coveralls
+    #   env: 
+    #     COVERALLS_SERVICE_NAME: 'GitHub CI'
+    #     COVERALLS_GIT_BRANCH: master
+    #     COVERALLS_REPO_TOKEN : ${{ secrets.COVERALLS_REPO_TOKEN }}
+    #     NODE_COVERALLS_DEBUG: 0 # or 1 for verbsoe
+    #   run: |
+    #     npm install coveralls -g 
+    #     cat ./coverage/test.lcov | coveralls
+
+    - name: Coveralls
+      uses: coverallsapp/github-action@v2
+      # with:
+        # github-token: ${{ github.token }}
+        # debug: true
+
+  # Badge:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: out lcov file
+  #     run: npx nyc report --reporter=text-lcov > ./coverage/test.lcov
+  #   - name: Coveralls
+  #     uses: coverallsapp/github-action@v2
+  #     with:
+  #       # github-token: ${{ github.token }}
+  #       debug: true

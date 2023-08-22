@@ -1,5 +1,7 @@
 # axios-extra
 
+[![Coverage Status](https://coveralls.io/repos/github/cnwhy/axios-extra/badge.svg?branch=master)](https://coveralls.io/github/cnwhy/axios-extra?branch=master) [![github test](https://github.com/cnwhy/axios-extra/workflows/test/badge.svg?branch=master)](https://github.com/cnwhy/axios-extra/actions/workflows/test.yml)
+
 通过 ES6 的`Proxy`对像, 让 [axios](https://github.com/axios/axios) 集成 [promise-queue-plus](https://github.com/cnwhy/promise-queue-plus), 使 `axios` 支持 **最大并发** 及 **出错重试** 的功能.
 
 > 未添加任何 API, 你完全可以像使用 `axios` 那样使用 `axios-extra`;

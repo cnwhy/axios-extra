@@ -25,6 +25,8 @@ let axios1 = axios.create({
 		retryIsJump: true //是否立即重试, 否则将在请求队列尾部插入重试请求
 	}
 });
+
+let {stop, start, clear} = axios1.requestQueue; // 暴露内部的队列对像，可以使用 stop start clear 等 API;
 ```
 
 > 更多 `queueOptions` 配制可参看[这里](https://github.com/cnwhy/promise-queue-plus#queuepushpromisefun-args-options)

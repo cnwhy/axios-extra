@@ -94,6 +94,11 @@ function proxyAxios(queue, axios) {
 					return create(attr.call(this, options), maxConcurrent, queueOptions);
 				};
 			}
+			if (property === "requestQueue") {
+				// const { start, stop, clear } = queue;
+				// return { start, stop, clear };
+				return queue;
+			}
 			return attr;
 		}
 	});

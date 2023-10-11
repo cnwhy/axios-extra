@@ -1,6 +1,6 @@
 {
   "name": "axios-extra",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Extend \"Axios\"; add concurrency limits, retry, etc.",
   "main": "index.js",
   "scripts": {
